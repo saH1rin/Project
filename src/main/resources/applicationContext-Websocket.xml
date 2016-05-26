@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+	
+	<!-- 指服务端接收地址的前缀，意思就是说  客户端给服务端  发消息的地址的前缀 -->
+    <websocket:message-broker application-destination-prefix="/app">
+    <!-- 这个方法的作用是添加一个服务端点，来接收客户端的连接。 -->
+    <!-- 表示添加了一个/socket端点，客户端就可以通过这个端点来进行连接。 -->
+        <websocket:stomp-endpoint path="/socket.action" >
+        <!-- 作用是开启SockJS支持 -->
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <!-- 表示客户端订阅地址的前缀信息，也就是  客户端接收服务端  消息的地址的前缀信息 -->
+        <websocket:stomp-broker-relay prefix="/topic,/queue" />
+    </websocket:message-broker>
+
+</beans>
